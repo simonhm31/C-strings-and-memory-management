@@ -1,8 +1,12 @@
 #!/bin/bash
-g++ -Wall -g -o palindrome *.cpp
+
+# Compile all .cpp files in the current directory
+gcc -Wall -g -o palindrome palindrome.c main.c
+
+# Check if the compilation was successful
 if [ $? -eq 0 ]; then
-    echo "Compile successful."
+    echo "Compilation successful."
 else
-    echo "Compilefailed."
+    echo "Compilation failed."
     exit 1
 fi
