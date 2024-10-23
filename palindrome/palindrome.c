@@ -48,7 +48,6 @@ char *palindrome(char const *str) {
   free(rev);
   return answer;
 }
-
 void free_palindrome_result(char *result) {
   free(result); // Free the memory allocated for the answer string
 }
