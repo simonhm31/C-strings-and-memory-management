@@ -8,5 +8,8 @@
         "pthread",
         "pthreads",
         "REAMDE"
-    ]
+    ],
+    "files.associations": {
+        "string.h": "c"
+    }
 }

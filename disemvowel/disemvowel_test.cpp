@@ -1,45 +1,48 @@
 #include <gtest/gtest.h>
-
 #include "disemvowel.h"
 
-TEST(Disemvowel, HandleEmptyString) {
-  ASSERT_STREQ("", disemvowel((char*) ""));
+void check_vowel_removal(const char* input, const char* expected) {
+  char* result = disemvowel((char*)input);
+  ASSERT_STREQ(expected, result);
+  free(result);
 }
 
-TEST(Disemvowel, HandleNoVowels) {
-  ASSERT_STREQ("pqrst", disemvowel((char*) "pqrst"));
+TEST(Disemvowel, HandlesEmptyString) {
+  check_vowel_removal("", "");
 }
 
-TEST(Disemvowel, HandleOnlyVowels) {
-  ASSERT_STREQ("", disemvowel((char*) "aeiouAEIOUOIEAuoiea"));
+TEST(Disemvowel, HandlesNoVowels) {
+  check_vowel_removal("pqrst", "pqrst");
 }
 
-TEST(Disemvowel, HandleMorrisMinnesota) {
-  ASSERT_STREQ("Mrrs, Mnnst",
-		      disemvowel((char*) "Morris, Minnesota"));
+TEST(Disemvowel, HandlesOnlyVowels) {
+  check_vowel_removal("aeiouAEIOUOIEAuoiea", "");
 }
 
-TEST(Disemvowel, HandlePunctuation) {
-  ASSERT_STREQ("n (nxplnd) lphnt!", 
-		      disemvowel((char*) "An (Unexplained) Elephant!"));
+TEST(Disemvowel, HandlesMorrisMinnesota) {
+  check_vowel_removal("Morris, Minnesota", "Mrrs, Mnnst");
 }
 
-TEST(Disemvowel, HandleLongString) {
+TEST(Disemvowel, HandlesPunctuation) {
+  check_vowel_removal("An (Unexplained) Elephant!", "n (nxplnd) lphnt!");
+}
+
+TEST(Disemvowel, HandlesLongString) {
   char *str;
-  int size;
-  int i;
+  int size = 50000;
 
-  size = 50000;
   str = (char*) calloc(size, sizeof(char));
   str[0] = 'x';
   str[1] = 'y';
   str[2] = 'z';
-  for (i = 3; i < size-1; ++i) {
+  
+  for (int i = 3; i < size - 1; ++i) {
     str[i] = 'a';
   }
-  str[size-1] = '\0';
   
-  ASSERT_STREQ("xyz", disemvowel(str));
+  str[size - 1] = '\0';
+  
+  check_vowel_removal(str, "xyz");
 
   free(str);
 }
