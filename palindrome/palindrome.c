@@ -45,12 +45,12 @@ char *palindrome(char const *str) {
     answer[1] = 'o';
     answer[2] = '\0';
   }
+  free(rev); 
 
-  free(rev); // Free the memory allocated for the reversed string
 
   return answer;
 }
 
 void free_palindrome_result(char *result) {
-  free(result); // Free the memory allocated for the answer string
+  free(result); 
 }
